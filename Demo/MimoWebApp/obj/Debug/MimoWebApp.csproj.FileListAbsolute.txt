@@ -1,7 +1,0 @@
-D:\Users\Jay\Projects\MimoAPI\MimoWebApp\obj\Debug\ResolveAssemblyReference.cache
-D:\Users\Jay\Projects\MimoAPI\MimoWebApp\bin\MimoWebApp.dll
-D:\Users\Jay\Projects\MimoAPI\MimoWebApp\bin\MimoWebApp.pdb
-D:\Users\Jay\Projects\MimoAPI\MimoWebApp\bin\MimoAPI.dll
-D:\Users\Jay\Projects\MimoAPI\MimoWebApp\bin\MimoAPI.pdb
-D:\Users\Jay\Projects\MimoAPI\MimoWebApp\obj\Debug\MimoWebApp.dll
-D:\Users\Jay\Projects\MimoAPI\MimoWebApp\obj\Debug\MimoWebApp.pdb

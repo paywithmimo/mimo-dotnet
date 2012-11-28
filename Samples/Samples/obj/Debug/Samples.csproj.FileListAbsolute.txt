@@ -1,0 +1,7 @@
+D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Samples\Samples\bin\Samples.dll
+D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Samples\Samples\bin\Samples.pdb
+D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Samples\Samples\bin\MimoAPI.dll
+D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Samples\Samples\bin\MimoAPI.pdb
+D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Samples\Samples\obj\Debug\ResolveAssemblyReference.cache
+D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Samples\Samples\obj\Debug\Samples.dll
+D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Samples\Samples\obj\Debug\Samples.pdb
