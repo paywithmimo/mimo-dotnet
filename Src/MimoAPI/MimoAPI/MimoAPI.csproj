@@ -8,7 +8,7 @@
     <ProjectGuid>{EC9373B0-BF7E-4578-AD6F-FC4DF04A3718}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MimoAPI</RootNamespace>
+    <RootNamespace>MimoRestClient</RootNamespace>
     <AssemblyName>MimoAPI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

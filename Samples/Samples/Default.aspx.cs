@@ -2,6 +2,7 @@
 using System.Web;
 using MimoAPI;
 using System.Configuration;
+using System.Threading;
 
 namespace Samples
 {
@@ -23,20 +24,29 @@ namespace Samples
                     }
                     if (Request.QueryString["code"] != "" && Request.QueryString["code"] != null)
                     {
+                        //set access code session
                         Session["Mimo_Client_AccessCode"] = Convert.ToString(Request.QueryString["code"]);
+                        //print access code
                         lblAccessCode.Text = "Your current Access Code for mimo is : " + Convert.ToString(Request.QueryString["code"]);
-                        MimoOAuth.GetAccessToken();
-                        lblAccessToken.Text = "Your current Access Token for mimo is : " + MimoOAuth.GetAccessToken();
+                        
+                        //Exchange the temporary code given to us in the querystring, for a never-expiring OAuth access token
+                        MimoRestClient.requestToken();
+
+                        //print access token
+                        lblAccessToken.Text = "Your current Access Token for mimo is : " + MimoRestClient.requestToken();
+                        
+                        ancUser.Visible = true;
+                        ancMoney.Visible = true;
                     }
                     else
                     {
-                        MimoOAuth.GetAccessCode();
+                        //Create an authentication URL that the user will be redirected to for get access code
+                        MimoRestClient.GetAccessCode();
                     }
                 }
             }
-            catch (Exception ex)
-            {
-            }
+            catch (ThreadAbortException th) { }
+            catch (Exception ex) { }
         }
     }
 }

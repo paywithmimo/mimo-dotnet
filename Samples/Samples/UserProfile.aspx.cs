@@ -22,16 +22,16 @@ namespace Samples
             switch (sSearchParaMeter)
             {
                 case "username":
-                    lblUserProfile.Text = MimoOAuth.GetUserProfile("username=" + txtValue.Text.Trim());
+                    lblUserProfile.Text = MimoRestClient.getUser("username", txtValue.Text.Trim());
                     break;
                 case "email":
-                    lblUserProfile.Text = MimoOAuth.GetUserProfile("email=" + txtValue.Text.Trim());
+                    lblUserProfile.Text = MimoRestClient.getUser("email", txtValue.Text.Trim());
                     break;
                 case "phone":
-                    lblUserProfile.Text = MimoOAuth.GetUserProfile("phone=" + txtValue.Text.Trim());
+                    lblUserProfile.Text = MimoRestClient.getUser("phone", txtValue.Text.Trim());
                     break;
                 case "account_number":
-                    lblUserProfile.Text = MimoOAuth.GetUserProfile("account_number=" + txtValue.Text.Trim());
+                    lblUserProfile.Text = MimoRestClient.getUser("account_number", txtValue.Text.Trim());
                     break;
             }
         }

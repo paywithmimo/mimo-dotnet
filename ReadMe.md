@@ -27,8 +27,8 @@ This API includes various usage examples, including:
 	Samples
 	--------
 	1.	 Open the 'Samples.sln' file in Visual Studio.
-	2.	 Define the 'ClientID','ClientSecret' attributes in the `Web.config` file with your Mimo application key and secret respectively.
-	2.   Also set key "ReturnURL" to your path like "http://your domain here/Default.aspx" in Web.config file.
+	2.	 Define the 'apiKey','apiSecret' attributes in the `Web.config` file with your Mimo application key and secret respectively.
+	2.   Also set key "redirectUri" to your path like "http://your domain here/Default.aspx" in Web.config file.
 	3.	 Also take changes in web.config file keys if required, those keys are: "NetworkCredential_Username", "NetworkCredential_Password" and "BaseURL" 
 	4.   Click on 'Build > Rebuild Solution'.
 
@@ -37,7 +37,7 @@ This API includes various usage examples, including:
 	-----
 
 	First of all get Access Code from Mimo site which is done by
-		MimoOAuth.GetAccessCode();
+		MimoRestClient.GetAccessCode();
 
 	After getting Access Code from query string of your return URL, also set session["Mimo_Client_AccessCode"] in the return url page from query string like below:
  
@@ -47,29 +47,29 @@ This API includes various usage examples, including:
 	}
 
 	After complete this task get Access Token from mimo site which is done by 
-		string AccessToken = MimoOAuth.GetAccessToken();
+		string AccessToken = MimoRestClient.requestToken();
 	
 	Both Access code and Access Token you have taken from Mimo site.
 
 	Now you can get user profile like :
-		string UserProfile = MimoOAuth.GetUserProfile("username=le");
+		string UserProfile = MimoRestClient.getUser(string sSearchField, string sValue);    ==> Get user details based on search criteria
 
 	Perform money transaction like :
-		string MoneyTransfer = MimoOAuth.GetUserProfile("&notes=buyKindle&amount=100");
+		string MoneyTransfer = MimoRestClient.transaction(string amount, string note);    ==> transaction details
 
 ## Methods
 Authantication :
 
 - GetAccessCode() ==> perform to get access code 
-- GetAccessToken() ==> perform to get access token 
+- requestToken() ==> perform to get access token 
 
 User Profile :
 
-- GetGetUserProfile(string sSearchParaMeter) ==> get user detail from with different type e.g. by username, by email-id, by phone-no, by account no
+- getUser(string sSearchField, string sValue) ==> get user detail from with different type e.g. by username, by email-id, by phone-no, by account no
 
 Money Transfer :
 
-- MoneyTransfer(string sTransferParaMeter) ==> transfer amount from account
+- transaction(string amount, string note) ==> transfer amount from account
 
 ## Credits
 MIMO Payment Services

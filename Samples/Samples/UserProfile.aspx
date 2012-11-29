@@ -25,6 +25,11 @@
     <br />
     <br />
     <asp:Label ID="lblUserProfile" runat="server"></asp:Label>
+    <br />
+    <br />
+    <a href="Default.aspx">Home</a>
+    <br />
+    <a href="MoneyTransfer.aspx">Money Transfer</a>
     </div>
     </form>
 </body>

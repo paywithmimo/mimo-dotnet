@@ -17,14 +17,7 @@ namespace Samples
         /// <param name="e"></param>
         protected void btnAmount_Click(object sender, EventArgs e)
         {
-            string sTransferParaMeter = "";
-            if (txtnote.Text.Trim() != "" || txtnote.Text.Trim() != null)
-            {
-                sTransferParaMeter += "&notes=" + txtnote.Text.Trim();
-            }
-            sTransferParaMeter += "&amount=" + txtAmount.Text.Trim();
-
-            lblmessage.Text = MimoOAuth.MoneyTransfer(sTransferParaMeter);
+            lblmessage.Text = MimoRestClient.transaction(txtAmount.Text.Trim(), txtnote.Text.Trim());
         }
     }
 }

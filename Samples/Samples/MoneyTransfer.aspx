@@ -21,7 +21,11 @@
     <br />
     <asp:Button ID="btnAmount" runat="server" CausesValidation="true" Text="Money Transfer" onclick="btnAmount_Click" />
     <br />
-    <asp:Label ID="lblmessage" runat="server"></asp:Label>
+    <asp:Label ID="lblmessage" runat="server"></asp:Label><br />
+    <br />
+    <a href="Default.aspx">Home</a>
+    <br />
+    <a href="UserProfile.aspx">User Profile</a>
     </div>
     </form>
 </body>

@@ -13,6 +13,10 @@
     <br />
     <asp:Label ID="lblAccessToken" runat="server"></asp:Label>
     <br />
+    <br />
+    <a id="ancUser" runat="server" visible="false" href="UserProfile.aspx">User Profile</a>
+    <br />
+    <a id="ancMoney" runat="server" visible="false" href="MoneyTransfer.aspx">Money Transfer</a>
     </div>
     </form>
 </body>

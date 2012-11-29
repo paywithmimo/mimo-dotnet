@@ -1,4 +1,35 @@
-﻿using System;
+﻿/**
+ * MIMO REST API Library for C#
+ *
+ * MIT LICENSE
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ * @package   MIMO
+ * @copyright Copyright (c) 2012 Mimo Inc. (http://www.mimo.com.ng)
+ * @license   http://opensource.org/licenses/MIT MIT
+ * @version   1.0.0
+ * @link      http://www.mimo.com.ng
+ */
+
+using System;
 using System.Web;
 using System.Net;
 using System.IO;
@@ -6,15 +37,23 @@ using System.Threading;
 using System.Web.Script.Serialization;
 using System.Configuration;
 
+/**
+ * MIMO API Library for C#
+ *
+ * @package   MIMO
+ * @copyright Copyright (c) 2012 Mimo Inc. (http://www.mimo.com.ng)
+ * @license   http://opensource.org/licenses/MIT MIT
+ */
 namespace MimoAPI
 {
-    public class MimoOAuth
+    public class MimoRestClient
     {
-        public static string ClientID = "";      // Client ID provided by the mimo site
-        public static string ClientSecret = "";  // Client Secret provided by the mimo site
-        public static string ReturnURL = "";     // Url where the user will be redirected after he accepts or denied the T&S
+        public static string apiKey = "";      // Client ID provided by the mimo site
+        public static string apiSecret = "";  // Client Secret provided by the mimo site
+        public static string redirectUri = "";     // Url where the user will be redirected after he accepts or denied the T&S
+        public static string mode = "";          // Transaction mode. Can be 'live' or 'test'        
 
-        public static string sAccessToken = "";
+        public static string sAccessToken = "";  // oauth token
         public static string sExpiresIn = "";
 
         public static string sAccountnumber = "";
@@ -38,10 +77,10 @@ namespace MimoAPI
         {
             try
             {
-                ClientID = ConfigurationManager.AppSettings["ClientID"].ToString();
-                ClientSecret = ConfigurationManager.AppSettings["ClientSecret"].ToString();
-                ReturnURL = ConfigurationManager.AppSettings["ReturnURL"].ToString();
-                HttpContext.Current.Response.Redirect(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/oauth/v2/authenticate?client_id=" + ClientID + "&url=" + ReturnURL + "&response_type=code");                
+                apiKey = ConfigurationManager.AppSettings["apiKey"].ToString();
+                apiSecret = ConfigurationManager.AppSettings["apiSecret"].ToString();
+                redirectUri = ConfigurationManager.AppSettings["redirectUri"].ToString();
+                HttpContext.Current.Response.Redirect(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/oauth/v2/authenticate?client_id=" + apiKey + "&url=" + redirectUri + "&response_type=code");
             }
             catch (ThreadAbortException th) { }
             catch (Exception ex) { }
@@ -50,12 +89,12 @@ namespace MimoAPI
         /// <summary>
         /// Get the Access Token from MIMO site for Current Client ID
         /// </summary>
-        /// <returns></returns>
-        public static string GetAccessToken()
+        /// <returns>AccessToken</returns>
+        public static string requestToken()
         {
-            ClientID = ConfigurationManager.AppSettings["ClientID"].ToString();
-            ClientSecret = ConfigurationManager.AppSettings["ClientSecret"].ToString();
-            ReturnURL = ConfigurationManager.AppSettings["ReturnURL"].ToString();
+            apiKey = ConfigurationManager.AppSettings["apiKey"].ToString();
+            apiSecret = ConfigurationManager.AppSettings["apiSecret"].ToString();
+            redirectUri = ConfigurationManager.AppSettings["redirectUri"].ToString();
             string AccessToken = "";
             string sReturnJson = "";
             try
@@ -63,7 +102,7 @@ namespace MimoAPI
                 HttpWebRequest webRequest;
                 if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessCode"]) != "" || HttpContext.Current.Session["Mimo_Client_AccessCode"] != null)
                 {
-                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/oauth/v2/token?client_id=" + ClientID + "&client_secret=" + ClientSecret + "&url=" + ReturnURL + "&code=" + Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessCode"]) + "&grant_type=authorization_code");
+                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/oauth/v2/token?client_id=" + apiKey + "&client_secret=" + apiSecret + "&url=" + redirectUri + "&code=" + Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessCode"]) + "&grant_type=authorization_code");
                     webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                     webRequest.Method = "POST";
                     var httpResponse = (HttpWebResponse)webRequest.GetResponse();
@@ -97,25 +136,26 @@ namespace MimoAPI
         }
 
         /// <summary>
-        /// Get the User Profile from MIMO site for current user
+        /// Grabs the basic account information for the provided Mimo user search parameter
         /// </summary>
-        /// <param name="sSearchParaMeter"></param>
-        /// <returns></returns>
-        public static string GetUserProfile(string sSearchParaMeter)
+        /// <param name="sSearchField">Mimo Account Field like username, email, phone, account_number</param>
+        /// <param name="sValue">Mimo Account value of username, email, phone, account_number you wanted to get searched</param>
+        /// <returns>Basic user information</returns>
+        public static string getUser(string sSearchField, string sValue)
         {
             string UserProfile = "";
             try
             {
                 if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) == "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] == null)
                 {
-                    GetAccessToken();
+                    requestToken();
                     UserProfile = "";
                 }
                 if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) != "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] != null)
                 {
                     string sReturnJson = "";
                     HttpWebRequest webRequest;
-                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/user/card_id?" + sSearchParaMeter + "&access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString());
+                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/user/card_id?" + sSearchField + "=" + sValue + "&access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString());
                     webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                     webRequest.Method = "GET";
                     var httpResponse = (HttpWebResponse)webRequest.GetResponse();
@@ -142,31 +182,43 @@ namespace MimoAPI
             }
             catch (Exception ex)
             {
-                UserProfile = ex.ToString();
+                if (ex.ToString().Contains("404"))
+                {
+                    UserProfile = "User account information not found.";
+                }
+                else
+                {
+                    UserProfile = ex.ToString();
+                }
             }
             return UserProfile;
         }
         
         /// <summary>
-        /// Take money transfer for Current user
+        /// Grab information for the given transaction ID
         /// </summary>
-        /// <param name="sTransferParaMeter"></param>
-        /// <returns></returns>
-        public static string MoneyTransfer(string sTransferParaMeter)
+        /// <param name="amount">Amount to which information is pulled</param>
+        /// <param name="note">Amount to which information is pulled</param>
+        /// <returns>Transaction information</returns>
+        public static string transaction(string amount, string note)
         {
             string sMsg = "";
             try
             {
                 if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) == "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] == null)
                 {
-                    GetAccessToken();
+                    requestToken();
                     sMsg = "";
                 }
                 if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) != "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] != null)
                 {
+                    if (amount == "" || amount == null)
+                    {
+                        return sMsg = "Please enter amount.";
+                    }
                     string sReturnJson = "";
                     HttpWebRequest webRequest;
-                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/transfers?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + sTransferParaMeter);
+                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/transfers?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&amount=" + amount + "&notes=" + note);
                     webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                     webRequest.Method = "POST";
                     var httpResponse = (HttpWebResponse)webRequest.GetResponse();
