@@ -37,9 +37,11 @@ This API includes various usage examples, including:
 	Usage
 	-----
 	First of all get Access Code from Mimo site which is done by
+	
 		MimoRestClient.GetAccessCode();
 
 	Once you will get the Access Code from query string of your return URL, also set session["Mimo_Client_AccessCode"] in the return url page from query string like below:
+	
  
 	if (Request.QueryString["code"] != "" && Request.QueryString["code"] != null)
 	{
@@ -47,6 +49,7 @@ This API includes various usage examples, including:
 	}
 
 	Next task is to get the Access Token from mimo site which is done by 
+	
 		string AccessToken = MimoRestClient.requestToken();
 	
 	After geting the Access Code and Access Token , now you can get the user profile as shown:
@@ -54,6 +57,7 @@ This API includes various usage examples, including:
     	string UserProfile = MimoRestClient.getUser(string sSearchField, string sValue); ==> Get user details based on search criteria
 
 	You can perform money transaction as shown :
+	
 		string MoneyTransfer = MimoRestClient.transaction(string amount, string note);    ==> transaction details
 
 ## Methods
