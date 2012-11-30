@@ -28,33 +28,32 @@ This API includes various usage examples, including:
 	--------
 	1.	 Open the 'Samples.sln' file in Visual Studio.
 	2.	 Define the 'apiKey','apiSecret' attributes in the `Web.config` file with your Mimo application key and secret respectively.
-	2.   Also set key "redirectUri" to your path like "http://your domain here/Default.aspx" in Web.config file.
-	3.	 Also take changes in web.config file keys if required, those keys are: "NetworkCredential_Username", "NetworkCredential_Password" and "BaseURL" 
+	2.   Set key "redirectUri" to your path like "http://your domain here/Default.aspx" in Web.config file.
+	3.	 Change the values of following key in web.config if required
+		 "NetworkCredential_Username", "NetworkCredential_Password" and "BaseURL" 
 	4.   Click on 'Build > Rebuild Solution'.
 
 
 	Usage
 	-----
-
 	First of all get Access Code from Mimo site which is done by
 		MimoRestClient.GetAccessCode();
 
-	After getting Access Code from query string of your return URL, also set session["Mimo_Client_AccessCode"] in the return url page from query string like below:
+	Once you will get the Access Code from query string of your return URL, also set session["Mimo_Client_AccessCode"] in the return url page from query string like below:
  
 	if (Request.QueryString["code"] != "" && Request.QueryString["code"] != null)
 	{
 		Session["Mimo_Client_AccessCode"] = Convert.ToString(Request.QueryString["code"]);
 	}
 
-	After complete this task get Access Token from mimo site which is done by 
+	Next task is to get the Access Token from mimo site which is done by 
 		string AccessToken = MimoRestClient.requestToken();
 	
-	Both Access code and Access Token you have taken from Mimo site.
+	After geting the Access Code and Access Token , now you can get the user profile as shown:
+	
+    	string UserProfile = MimoRestClient.getUser(string sSearchField, string sValue); ==> Get user details based on search criteria
 
-	Now you can get user profile like :
-		string UserProfile = MimoRestClient.getUser(string sSearchField, string sValue);    ==> Get user details based on search criteria
-
-	Perform money transaction like :
+	You can perform money transaction as shown :
 		string MoneyTransfer = MimoRestClient.transaction(string amount, string note);    ==> transaction details
 
 ## Methods
