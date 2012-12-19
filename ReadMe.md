@@ -59,6 +59,10 @@ This API includes various usage examples, including:
 	You can perform money transaction as shown :
 	
 		string MoneyTransfer = MimoRestClient.transaction(string amount, string note);    ==> transaction details
+		
+	You can perform money refund as shown :
+	
+		string MoneyRefund = MimoRestClient.Refund(string amount, string note, string transaction_id);    ==> refund details
 
 ## Methods
 Authantication :
@@ -73,6 +77,10 @@ User Profile :
 Money Transfer :
 
 - transaction(string amount, string note) ==> transfer amount from account
+
+Money Refund :
+
+- Refund(string amount, string note, string transaction_id) ==> refund amount from account with given transaction id.
 
 ## Credits
 MIMO Payment Services

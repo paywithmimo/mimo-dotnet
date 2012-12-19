@@ -39,4 +39,13 @@ namespace MimoAPI
     {
         public string message { get; set; }
     }
+
+    /// <summary>
+    /// Use for set the value of Refund response
+    /// </summary>
+    public class Refund
+    {
+        public string message { get; set; }
+        public string transaction_id { get; set; }
+    }
 }

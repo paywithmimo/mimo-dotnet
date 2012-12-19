@@ -10,7 +10,7 @@
 namespace Samples {
     
     
-    public partial class Default {
+    public partial class Refund {
         
         /// <summary>
         /// form1 control.
@@ -22,48 +22,75 @@ namespace Samples {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// lblAccessCode control.
+        /// txtnote control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAccessCode;
+        protected global::System.Web.UI.WebControls.TextBox txtnote;
         
         /// <summary>
-        /// lblAccessToken control.
+        /// VldNoteReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAccessToken;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator VldNoteReq;
         
         /// <summary>
-        /// ancUser control.
+        /// txtAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancUser;
+        protected global::System.Web.UI.WebControls.TextBox txtAmount;
         
         /// <summary>
-        /// ancMoney control.
+        /// vldAmountReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancMoney;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vldAmountReq;
         
         /// <summary>
-        /// ancRefund control.
+        /// txtTransactionId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancRefund;
+        protected global::System.Web.UI.WebControls.TextBox txtTransactionId;
+        
+        /// <summary>
+        /// vldTransactionIDReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vldTransactionIDReq;
+        
+        /// <summary>
+        /// btnAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAmount;
+        
+        /// <summary>
+        /// lblmessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblmessage;
     }
 }

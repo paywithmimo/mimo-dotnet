@@ -70,6 +70,8 @@ namespace MimoAPI
 
         public static string sMessage = "";
 
+        public static string stransaction_id = "";
+
         /// <summary>
         /// Get the Access Code from MIMO site for Current Client ID
         /// </summary>
@@ -198,7 +200,7 @@ namespace MimoAPI
         /// Grab information for the given transaction ID
         /// </summary>
         /// <param name="amount">Amount to which information is pulled</param>
-        /// <param name="note">Amount to which information is pulled</param>
+        /// <param name="note">Note to which information is pulled</param>
         /// <returns>Transaction information</returns>
         public static string transaction(string amount, string note)
         {
@@ -236,6 +238,54 @@ namespace MimoAPI
             catch (Exception ex)
             {
                 sMsg = ex.ToString();                
+            }
+            return sMsg;
+        }
+
+        /// <summary>
+        /// Grab information for the given transaction ID
+        /// </summary>
+        /// <param name="amount">Amount to which information is pulled</param>
+        /// <param name="note">Note to which information is pulled</param>
+        /// <param name="transaction_id">transaction_id to which information is pulled</param>
+        /// <returns>Refund information</returns>
+        public static string Refund(string amount, string note, string transaction_id)
+        {
+            string sMsg = "";
+            try
+            {
+                if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) == "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] == null)
+                {
+                    requestToken();
+                    sMsg = "";
+                }
+                if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) != "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] != null)
+                {
+                    if (amount == "" || amount == null)
+                    {
+                        return sMsg = "Please enter amount.";
+                    }
+                    string sReturnJson = "";
+                    HttpWebRequest webRequest;
+                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/refunds?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&amount=" + amount + "&notes=" + note + "&transaction_id=" + transaction_id);
+                    webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
+                    webRequest.Method = "POST";
+                    var httpResponse = (HttpWebResponse)webRequest.GetResponse();
+                    var streamReader = new StreamReader(httpResponse.GetResponseStream());
+                    sReturnJson = Convert.ToString(streamReader.ReadToEnd());
+                    if (sReturnJson != "" || sReturnJson != null)
+                    {
+                        JavaScriptSerializer serializer = new JavaScriptSerializer();
+                        Refund RF = serializer.Deserialize<Refund>(sReturnJson);
+                        sMessage = RF.message;
+                        stransaction_id = RF.transaction_id;
+                        sMsg = sReturnJson;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                sMsg = ex.ToString();
             }
             return sMsg;
         }
