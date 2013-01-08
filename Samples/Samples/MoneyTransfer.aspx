@@ -28,6 +28,10 @@
     <a href="UserProfile.aspx">User Profile</a>
     <br />
     <a href="Refund.aspx">Refund</a>
+    <br />
+    <a href="cancelTransaction.aspx">Cancel Transaction</a>
+    <br />
+    <a href="Registration.aspx">New Registration</a>
     </div>
     </form>
 </body>

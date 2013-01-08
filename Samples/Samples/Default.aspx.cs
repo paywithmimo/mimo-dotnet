@@ -38,6 +38,7 @@ namespace Samples
                         ancUser.Visible = true;
                         ancMoney.Visible = true;
                         ancRefund.Visible = true;
+                        ancCancel.Visible = true;
                     }
                     else
                     {

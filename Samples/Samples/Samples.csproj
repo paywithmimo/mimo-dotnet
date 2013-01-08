@@ -54,10 +54,12 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cancelTransaction.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="MoneyTransfer.aspx" />
     <Content Include="Refund.aspx" />
+    <Content Include="Registration.aspx" />
     <Content Include="UserProfile.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -72,6 +74,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cancelTransaction.aspx.cs">
+      <DependentUpon>cancelTransaction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cancelTransaction.aspx.designer.cs">
+      <DependentUpon>cancelTransaction.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -96,6 +105,13 @@
     </Compile>
     <Compile Include="Refund.aspx.designer.cs">
       <DependentUpon>Refund.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Registration.aspx.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registration.aspx.designer.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserProfile.aspx.cs">
       <DependentUpon>UserProfile.aspx</DependentUpon>

@@ -10,7 +10,7 @@
 namespace Samples {
     
     
-    public partial class Default {
+    public partial class cancelTransaction {
         
         /// <summary>
         /// form1 control.
@@ -22,57 +22,39 @@ namespace Samples {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// lblAccessCode control.
+        /// txtTransactionId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAccessCode;
+        protected global::System.Web.UI.WebControls.TextBox txtTransactionId;
         
         /// <summary>
-        /// lblAccessToken control.
+        /// vldTransactionIDReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAccessToken;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator vldTransactionIDReq;
         
         /// <summary>
-        /// ancUser control.
+        /// btnAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancUser;
+        protected global::System.Web.UI.WebControls.Button btnAmount;
         
         /// <summary>
-        /// ancMoney control.
+        /// lblmessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancMoney;
-        
-        /// <summary>
-        /// ancRefund control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancRefund;
-        
-        /// <summary>
-        /// ancCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancCancel;
+        protected global::System.Web.UI.WebControls.Label lblmessage;
     }
 }

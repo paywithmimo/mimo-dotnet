@@ -289,5 +289,120 @@ namespace MimoAPI
             }
             return sMsg;
         }
+
+        /// <summary>
+        /// Grab information for the given transaction ID
+        /// </summary>
+        /// <param name="transaction_id">transaction_id to which information is pulled</param>
+        /// <returns>Transaction void information</returns>
+        public static string cancelTransaction(string transaction_id)
+        {
+            string sMsg = "";
+            try
+            {
+                if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) == "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] == null)
+                {
+                    requestToken();
+                    sMsg = "";
+                }
+                if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) != "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] != null)
+                {
+                    if (transaction_id == "" || transaction_id == null)
+                    {
+                        return sMsg = "Please enter Transaction ID.";
+                    }
+                    string sReturnJson = "";
+                    HttpWebRequest webRequest;
+                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/transfers/void?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&transaction_id=" + transaction_id);
+                    webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
+                    webRequest.Method = "POST";
+                    //webRequest.KeepAlive = false;
+                    var httpResponse = (HttpWebResponse)webRequest.GetResponse();
+                    var streamReader = new StreamReader(httpResponse.GetResponseStream());
+                    sReturnJson = Convert.ToString(streamReader.ReadToEnd());
+                    if (sReturnJson != "" || sReturnJson != null)
+                    {
+                        JavaScriptSerializer serializer = new JavaScriptSerializer();
+                        Transfer TF = serializer.Deserialize<Transfer>(sReturnJson);
+                        sMessage = TF.message;
+                        sMsg = sMessage;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                sMsg = ex.ToString();
+            }
+            return sMsg;
+        }
+
+        /// <summary>
+        /// Register the new user with MIMO
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="account_type"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="pin"></param>
+        /// <param name="first_name"></param>
+        /// <param name="middle_name"></param>
+        /// <param name="surname"></param>
+        /// <param name="dob"></param>
+        /// <param name="gender"></param>
+        /// <param name="about"></param>
+        /// <param name="address_type"></param>
+        /// <param name="address"></param>
+        /// <param name="address_2"></param>
+        /// <param name="city"></param>
+        /// <param name="state"></param>
+        /// <param name="country"></param>
+        /// <param name="zip"></param>
+        /// <param name="website"></param>
+        /// <param name="facebook"></param>
+        /// <param name="twitter"></param>
+        /// <param name="challenge_question"></param>
+        /// <param name="challenge_answer"></param>
+        /// <param name="terms_and_conditions"></param>
+        /// <param name="company_name"></param>
+        /// <param name="company_id_number"></param>
+        /// <param name="rc_incorporation_year"></param>
+        /// <returns></returns>
+        public static string newRegistration(string username, string account_type, string email, string password, string pin, string first_name, string middle_name, string surname, string dob, string gender, string about, string address_type, string address, string address_2, string city, string state, string country, string zip, string website, string facebook, string twitter, string challenge_question, string challenge_answer, string terms_and_conditions, string company_name, string company_id_number, string rc_incorporation_year)
+        {
+            apiKey = ConfigurationManager.AppSettings["apiKey"].ToString();
+            apiSecret = ConfigurationManager.AppSettings["apiSecret"].ToString();
+            string sMsg = "";
+            try
+            {
+                if (email == "" || email == null)
+                {
+                    return sMsg = "Please enter Email address.";
+                }
+                if (password == "" || password == null)
+                {
+                    return sMsg = "Please enter password.";
+                }
+                string sReturnJson = "";
+                HttpWebRequest webRequest;
+                webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/registration?client_id=" + apiKey + "&client_secret=" + apiSecret + "&username=" + username + "&account_type=" + account_type + "&email=" + email + "&password=" + password + "&pin=" + pin + "&first_name=" + first_name + "&middle_name=" + middle_name + "&surname=" + surname + "&dob=" + dob + "&gender=" + gender + "&about=" + about + "&address_type=" + address_type + "&address=" + address + "&address_2=" + address_2 + "&city=" + city + "&state=" + state + "&country=" + country + "&zip=" + zip + "&website=" + website + "&facebook=" + facebook + "&twitter=" + twitter + "&challenge_question=" + challenge_question + "&challenge_answer=" + challenge_answer + "&terms_and_conditions=" + terms_and_conditions + "&company_name=" + company_name + "&company_id_number=" + company_id_number + "&rc_incorporation_year=" + rc_incorporation_year);
+                webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
+                webRequest.Method = "POST";
+                var httpResponse = (HttpWebResponse)webRequest.GetResponse();
+                var streamReader = new StreamReader(httpResponse.GetResponseStream());
+                sReturnJson = Convert.ToString(streamReader.ReadToEnd());
+                if (sReturnJson != "" || sReturnJson != null)
+                {
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    Transfer TF = serializer.Deserialize<Transfer>(sReturnJson);
+                    sMessage = TF.message;
+                    sMsg = sMessage;
+                }
+            }            
+            catch (Exception ex)
+            {
+                sMsg = ex.ToString();
+            }
+            return sMsg;
+        }
     }
 }

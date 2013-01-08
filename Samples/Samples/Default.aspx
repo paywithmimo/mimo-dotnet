@@ -19,6 +19,10 @@
     <a id="ancMoney" runat="server" visible="false" href="MoneyTransfer.aspx">Money Transfer</a>
     <br />
     <a id="ancRefund" runat="server" visible="false" href="Refund.aspx">Refund</a>
+    <br />
+    <a id="ancCancel" runat="server" visible="false" href="cancelTransaction.aspx">Cancel Transaction</a>
+    <br />
+    <a href="Registration.aspx">New Registration</a>
     </div>
     </form>
 </body>
