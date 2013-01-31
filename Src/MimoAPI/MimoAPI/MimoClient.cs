@@ -367,7 +367,7 @@ namespace MimoAPI
         /// <param name="company_id_number"></param>
         /// <param name="rc_incorporation_year"></param>
         /// <returns></returns>
-        public static string newRegistration(string username, string account_type, string email, string password, string pin, string first_name, string middle_name, string surname, string dob, string gender, string about, string address_type, string address, string address_2, string city, string state, string country, string zip, string website, string facebook, string twitter, string challenge_question, string challenge_answer, string terms_and_conditions, string company_name, string company_id_number, string rc_incorporation_year)
+        public static string newRegistration(string username, string account_type, string email, string password, string pin, string first_name, string middle_name, string surname, string dob, string gender, string about, string address_type, string address, string address_2, string city, string state, string country, string zip,string Phone, string website, string facebook, string twitter, string challenge_question, string challenge_answer, string terms_and_conditions, string company_name, string company_id_number, string rc_incorporation_year)
         {
             apiKey = ConfigurationManager.AppSettings["apiKey"].ToString();
             apiSecret = ConfigurationManager.AppSettings["apiSecret"].ToString();
@@ -384,7 +384,7 @@ namespace MimoAPI
                 }
                 string sReturnJson = "";
                 HttpWebRequest webRequest;
-                webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/registration?client_id=" + apiKey + "&client_secret=" + apiSecret + "&username=" + username + "&account_type=" + account_type + "&email=" + email + "&password=" + password + "&pin=" + pin + "&first_name=" + first_name + "&middle_name=" + middle_name + "&surname=" + surname + "&dob=" + dob + "&gender=" + gender + "&about=" + about + "&address_type=" + address_type + "&address=" + address + "&address_2=" + address_2 + "&city=" + city + "&state=" + state + "&country=" + country + "&zip=" + zip + "&website=" + website + "&facebook=" + facebook + "&twitter=" + twitter + "&challenge_question=" + challenge_question + "&challenge_answer=" + challenge_answer + "&terms_and_conditions=" + terms_and_conditions + "&company_name=" + company_name + "&company_id_number=" + company_id_number + "&rc_incorporation_year=" + rc_incorporation_year);
+                webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/registration?client_id=" + apiKey + "&client_secret=" + apiSecret + "&username=" + username + "&account_type=" + account_type + "&email=" + email + "&password=" + password + "&pin=" + pin + "&first_name=" + first_name + "&middle_name=" + middle_name + "&surname=" + surname + "&dob=" + dob + "&gender=" + gender + "&about=" + about + "&address_type=" + address_type + "&address=" + address + "&address_2=" + address_2 + "&city=" + city + "&state=" + state + "&country=" + country + "&zip=" + zip + "&mobile_phone=" + Phone + "&website=" + website + "&facebook=" + facebook + "&twitter=" + twitter + "&challenge_question=" + challenge_question + "&challenge_answer=" + challenge_answer + "&terms_and_conditions=" + terms_and_conditions + "&company_name=" + company_name + "&company_id_number=" + company_id_number + "&rc_incorporation_year=" + rc_incorporation_year);
                 webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                 webRequest.Method = "POST";
                 var httpResponse = (HttpWebResponse)webRequest.GetResponse();
@@ -393,9 +393,11 @@ namespace MimoAPI
                 if (sReturnJson != "" || sReturnJson != null)
                 {
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
-                    Transfer TF = serializer.Deserialize<Transfer>(sReturnJson);
-                    sMessage = TF.message;
-                    sMsg = sMessage;
+                    Register R = serializer.Deserialize<Register>(sReturnJson);
+                    sMessage = R.message;
+                    sAccessToken = R.access_token;
+                    sExpiresIn = R.access_token_expires_in;
+                    sMsg = sReturnJson;
                 }
             }            
             catch (Exception ex)

@@ -3,3 +3,7 @@ D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\bin\Debug\MimoA
 D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\obj\Debug\ResolveAssemblyReference.cache
 D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\obj\Debug\MimoAPI.dll
 D:\Users\Jay\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\obj\Debug\MimoAPI.pdb
+D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\bin\Debug\MimoAPI.dll
+D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\bin\Debug\MimoAPI.pdb
+D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\obj\Debug\MimoAPI.dll
+D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\obj\Debug\MimoAPI.pdb

@@ -81,6 +81,10 @@
     <span style="float:left;">About Me : </span><asp:TextBox ID="txtAboutMe" runat="server" MaxLength="250" TextMode="MultiLine" Rows="5" Wrap="true"></asp:TextBox>
     <br />
     <br />
+    Phone Number : <asp:TextBox ID="txtPhone" runat="server" MaxLength="11" ></asp:TextBox>
+    <asp:RequiredFieldValidator id="VldOhoneReq" runat="server" ControlToValidate="txtPhone" Display="Dynamic" ErrorMessage="Please enter Phone Number"></asp:RequiredFieldValidator>
+    <br />
+    <br />
     Website : <asp:TextBox ID="txtwebsite" runat="server" ></asp:TextBox>
     <br />
     <br />

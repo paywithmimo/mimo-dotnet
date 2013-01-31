@@ -70,7 +70,7 @@ This API includes various usage examples, including:
 		
 	You can perform new user registration as shown :
 	
-		string NewUserRegistration = MimoRestClient.newRegistration(string username, string account_type, string email, string password, string pin, string first_name, string middle_name, string surname, string dob, string gender, string about, string address_type, string address, string address_2, string city, string state, string country, string zip, string website, string facebook, string twitter, string challenge_question, string challenge_answer, string terms_and_conditions, string company_name, string company_id_number, string rc_incorporation_year);    ==> New user registration detail
+		string NewUserRegistration = MimoRestClient.newRegistration(string username, string account_type, string email, string password, string pin, string first_name, string middle_name, string surname, string dob, string gender, string about, string address_type, string address, string address_2, string city, string state, string country, string Phone, string zip, string website, string facebook, string twitter, string challenge_question, string challenge_answer, string terms_and_conditions, string company_name, string company_id_number, string rc_incorporation_year);    ==> New user registration detail
 
 ## Methods
 Authantication :
@@ -96,7 +96,7 @@ Void Method :
 
 Register Method :
 
-- newRegistration(string username, string account_type, string email, string password, string pin, string first_name, string middle_name, string surname, string dob, string gender, string about, string address_type, string address, string address_2, string city, string state, string country, string zip, string website, string facebook, string twitter, string challenge_question, string challenge_answer, string terms_and_conditions, string company_name, string company_id_number, string rc_incorporation_year) ==> Register new user with Mimo.
+- newRegistration(string username, string account_type, string email, string password, string pin, string first_name, string middle_name, string surname, string dob, string gender, string about, string address_type, string address, string address_2, string city, string state, string country, string zip, string Phone, string website, string facebook, string twitter, string challenge_question, string challenge_answer, string terms_and_conditions, string company_name, string company_id_number, string rc_incorporation_year) ==> Register new user with Mimo.
 
 ## Credits
 MIMO Payment Services

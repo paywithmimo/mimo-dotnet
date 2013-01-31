@@ -48,4 +48,14 @@ namespace MimoAPI
         public string message { get; set; }
         public string transaction_id { get; set; }
     }
+
+    /// <summary>
+    /// Use for set the value of newRegistration response
+    /// </summary>
+    public class Register
+    {
+        public string message { get; set; }
+        public string access_token { get; set; }
+        public string access_token_expires_in { get; set; }
+    }
 }
