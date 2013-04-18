@@ -29,9 +29,10 @@ This API includes various usage examples, including:
 	1.	 Open the 'Samples.sln' file in Visual Studio.
 	2.	 Define the 'apiKey','apiSecret' attributes in the `Web.config` file with your Mimo application key and secret respectively.
 	2.   Set key "redirectUri" to your path like "http://your domain here/Default.aspx" in Web.config file.
-	3.	 Change the values of following key in web.config if required
-		 "NetworkCredential_Username", "NetworkCredential_Password" and "BaseURL" 
-	4.   Click on 'Build > Rebuild Solution'.
+	3.   Set key "mode" to value="test" if you use sandbox account and set its value="live" if you use live account in Web.config file.
+	4.	 Change the values of following key in web.config if required
+		 "NetworkCredential_Username", "NetworkCredential_Password"
+	5.   Click on 'Build > Rebuild Solution'.
 
 
 	Usage

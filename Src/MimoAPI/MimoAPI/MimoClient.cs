@@ -48,10 +48,12 @@ namespace MimoAPI
 {
     public class MimoRestClient
     {
-        public static string apiKey = "";      // Client ID provided by the mimo site
-        public static string apiSecret = "";  // Client Secret provided by the mimo site
-        public static string redirectUri = "";     // Url where the user will be redirected after he accepts or denied the T&S
-        public static string mode = "";          // Transaction mode. Can be 'live' or 'test'        
+        public static string apiKey = "";       // Client ID provided by the mimo site
+        public static string apiSecret = "";    // Client Secret provided by the mimo site
+        public static string redirectUri = "";  // Url where the user will be redirected after he accepts or denied the T&S
+        public static string mode = "";         // Transaction mode. Can be 'live' or 'test'        
+        public static string sApiUrl = "";      // Url for api server
+        public static string sUserApiUrl = "";  // Url for user api server
 
         public static string sAccessToken = "";  // oauth token
         public static string sExpiresIn = "";
@@ -72,6 +74,29 @@ namespace MimoAPI
 
         public static string stransaction_id = "";
 
+        public static void SetAPIURL()
+        {
+            try
+            {
+                mode = ConfigurationManager.AppSettings["mode"].ToString();
+                if (mode.ToLower() == "test")
+                {
+                    sApiUrl = ConfigurationManager.AppSettings["STAGE_API_SERVER"].ToString();
+                    sUserApiUrl = ConfigurationManager.AppSettings["STAGE_USER_API_SERVER"].ToString();
+                }
+                else
+                {
+                    sApiUrl = ConfigurationManager.AppSettings["LIVE_API_SERVER"].ToString();
+                    sUserApiUrl = ConfigurationManager.AppSettings["LIVE_USER_API_SERVER"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                sApiUrl = "";
+                sUserApiUrl = "";
+            }            
+        }
+
         /// <summary>
         /// Get the Access Code from MIMO site for Current Client ID
         /// </summary>
@@ -79,10 +104,11 @@ namespace MimoAPI
         {
             try
             {
+                SetAPIURL();
                 apiKey = ConfigurationManager.AppSettings["apiKey"].ToString();
                 apiSecret = ConfigurationManager.AppSettings["apiSecret"].ToString();
                 redirectUri = ConfigurationManager.AppSettings["redirectUri"].ToString();
-                HttpContext.Current.Response.Redirect(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/oauth/v2/authenticate?client_id=" + apiKey + "&url=" + redirectUri + "&response_type=code");
+                HttpContext.Current.Response.Redirect(sApiUrl + "authenticate?client_id=" + apiKey + "&url=" + redirectUri + "&response_type=code");
             }
             catch (ThreadAbortException th) { }
             catch (Exception ex) { }
@@ -94,6 +120,7 @@ namespace MimoAPI
         /// <returns>AccessToken</returns>
         public static string requestToken()
         {
+            SetAPIURL();
             apiKey = ConfigurationManager.AppSettings["apiKey"].ToString();
             apiSecret = ConfigurationManager.AppSettings["apiSecret"].ToString();
             redirectUri = ConfigurationManager.AppSettings["redirectUri"].ToString();
@@ -104,7 +131,7 @@ namespace MimoAPI
                 HttpWebRequest webRequest;
                 if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessCode"]) != "" || HttpContext.Current.Session["Mimo_Client_AccessCode"] != null)
                 {
-                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/oauth/v2/token?client_id=" + apiKey + "&client_secret=" + apiSecret + "&url=" + redirectUri + "&code=" + Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessCode"]) + "&grant_type=authorization_code");
+                    webRequest = (HttpWebRequest)WebRequest.Create(sApiUrl + "token?client_id=" + apiKey + "&client_secret=" + apiSecret + "&url=" + redirectUri + "&code=" + Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessCode"]) + "&grant_type=authorization_code");
                     webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                     webRequest.Method = "POST";
                     var httpResponse = (HttpWebResponse)webRequest.GetResponse();
@@ -155,9 +182,10 @@ namespace MimoAPI
                 }
                 if (Convert.ToString(HttpContext.Current.Session["Mimo_Client_AccessToken"]) != "" || HttpContext.Current.Session["Mimo_Client_AccessToken"] != null)
                 {
+                    SetAPIURL();
                     string sReturnJson = "";
                     HttpWebRequest webRequest;
-                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/user/card_id?" + sSearchField + "=" + sValue + "&access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString());
+                    webRequest = (HttpWebRequest)WebRequest.Create(sUserApiUrl + "user/card_id?" + sSearchField + "=" + sValue + "&access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString());
                     webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                     webRequest.Method = "GET";
                     var httpResponse = (HttpWebResponse)webRequest.GetResponse();
@@ -218,9 +246,10 @@ namespace MimoAPI
                     {
                         return sMsg = "Please enter amount.";
                     }
+                    SetAPIURL();
                     string sReturnJson = "";
                     HttpWebRequest webRequest;
-                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/transfers?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&amount=" + amount + "&notes=" + note);
+                    webRequest = (HttpWebRequest)WebRequest.Create(sUserApiUrl + "transfers?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&amount=" + amount + "&notes=" + note);
                     webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                     webRequest.Method = "POST";
                     var httpResponse = (HttpWebResponse)webRequest.GetResponse();
@@ -265,9 +294,10 @@ namespace MimoAPI
                     {
                         return sMsg = "Please enter amount.";
                     }
+                    SetAPIURL();
                     string sReturnJson = "";
                     HttpWebRequest webRequest;
-                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/refunds?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&amount=" + amount + "&notes=" + note + "&transaction_id=" + transaction_id);
+                    webRequest = (HttpWebRequest)WebRequest.Create(sUserApiUrl + "refunds?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&amount=" + amount + "&notes=" + note + "&transaction_id=" + transaction_id);
                     webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                     webRequest.Method = "POST";
                     var httpResponse = (HttpWebResponse)webRequest.GetResponse();
@@ -311,9 +341,10 @@ namespace MimoAPI
                     {
                         return sMsg = "Please enter Transaction ID.";
                     }
+                    SetAPIURL();
                     string sReturnJson = "";
                     HttpWebRequest webRequest;
-                    webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/transfers/void?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&transaction_id=" + transaction_id);
+                    webRequest = (HttpWebRequest)WebRequest.Create(sUserApiUrl + "transfers/void?access_token=" + HttpContext.Current.Session["Mimo_Client_AccessToken"].ToString() + "&transaction_id=" + transaction_id);
                     webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                     webRequest.Method = "POST";
                     //webRequest.KeepAlive = false;
@@ -382,9 +413,10 @@ namespace MimoAPI
                 {
                     return sMsg = "Please enter password.";
                 }
+                SetAPIURL();
                 string sReturnJson = "";
                 HttpWebRequest webRequest;
-                webRequest = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["BaseURL"].ToString() + "/partner/registration?client_id=" + apiKey + "&client_secret=" + apiSecret + "&username=" + username + "&account_type=" + account_type + "&email=" + email + "&password=" + password + "&pin=" + pin + "&first_name=" + first_name + "&middle_name=" + middle_name + "&surname=" + surname + "&dob=" + dob + "&gender=" + gender + "&about=" + about + "&address_type=" + address_type + "&address=" + address + "&address_2=" + address_2 + "&city=" + city + "&state=" + state + "&country=" + country + "&zip=" + zip + "&mobile_phone=" + Phone + "&website=" + website + "&facebook=" + facebook + "&twitter=" + twitter + "&challenge_question=" + challenge_question + "&challenge_answer=" + challenge_answer + "&terms_and_conditions=" + terms_and_conditions + "&company_name=" + company_name + "&company_id_number=" + company_id_number + "&rc_incorporation_year=" + rc_incorporation_year);
+                webRequest = (HttpWebRequest)WebRequest.Create(sUserApiUrl + "registration?client_id=" + apiKey + "&client_secret=" + apiSecret + "&username=" + username + "&account_type=" + account_type + "&email=" + email + "&password=" + password + "&pin=" + pin + "&first_name=" + first_name + "&middle_name=" + middle_name + "&surname=" + surname + "&dob=" + dob + "&gender=" + gender + "&about=" + about + "&address_type=" + address_type + "&address=" + address + "&address_2=" + address_2 + "&city=" + city + "&state=" + state + "&country=" + country + "&zip=" + zip + "&mobile_phone=" + Phone + "&website=" + website + "&facebook=" + facebook + "&twitter=" + twitter + "&challenge_question=" + challenge_question + "&challenge_answer=" + challenge_answer + "&terms_and_conditions=" + terms_and_conditions + "&company_name=" + company_name + "&company_id_number=" + company_id_number + "&rc_incorporation_year=" + rc_incorporation_year);
                 webRequest.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["NetworkCredential_Username"].ToString(), ConfigurationManager.AppSettings["NetworkCredential_Password"].ToString());
                 webRequest.Method = "POST";
                 var httpResponse = (HttpWebResponse)webRequest.GetResponse();
