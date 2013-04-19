@@ -79,15 +79,15 @@ namespace MimoAPI
             try
             {
                 mode = ConfigurationManager.AppSettings["mode"].ToString();
-                if (mode.ToLower() == "test")
+                if (mode.ToLower() == "live")
                 {
-                    sApiUrl = ConfigurationManager.AppSettings["STAGE_API_SERVER"].ToString();
-                    sUserApiUrl = ConfigurationManager.AppSettings["STAGE_USER_API_SERVER"].ToString();
+                    sApiUrl = ConfigurationManager.AppSettings["PRODUCTION_API_SERVER"].ToString();
+                    sUserApiUrl = ConfigurationManager.AppSettings["PRODUCTION_USER_API_SERVER"].ToString();                    
                 }
                 else
                 {
-                    sApiUrl = ConfigurationManager.AppSettings["LIVE_API_SERVER"].ToString();
-                    sUserApiUrl = ConfigurationManager.AppSettings["LIVE_USER_API_SERVER"].ToString();
+                    sApiUrl = ConfigurationManager.AppSettings["SANDBOX_API_SERVER"].ToString();
+                    sUserApiUrl = ConfigurationManager.AppSettings["SANDBOX_USER_API_SERVER"].ToString();
                 }
             }
             catch (Exception ex)

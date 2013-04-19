@@ -7,3 +7,4 @@ D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\bin\Debug\Mim
 D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\bin\Debug\MimoAPI.pdb
 D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\obj\Debug\MimoAPI.dll
 D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\obj\Debug\MimoAPI.pdb
+D:\users\JayGK\Projects\Mimo-sdk-dotnet-master\Src\MimoAPI\MimoAPI\obj\Debug\MimoAPI.csprojResolveAssemblyReference.cache
